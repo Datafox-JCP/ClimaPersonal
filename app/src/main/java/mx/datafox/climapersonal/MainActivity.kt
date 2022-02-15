@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
         val service: WeatherService = retrofit.create(WeatherService::class.java)
 
-        service.getWeatherById(3516035L, "metric", "30ba6cd1ad33ea67e2dfd78a8d28ae62")
+        service.getWeatherById(3516035L, "metric", "")
     }
 
     private fun showError(message: String) {
