@@ -1,23 +1,12 @@
 <resources>
     <string name="app_name">Clima Personal</string>
     <string name="main_retrofit_in_progress">Consultando…</string>
-    <string name="today">Hoy</string>
-    <string name="location">Ubicación</string>
-    <string name="updated_at">Actualizando</string>
-    <string name="status">Cielo despejado</string>
-    <string name="temperature">24ºC</string>
-    <string name="address">Mexico City, MX</string>
-    <string name="date_time">11 Febrero 2021, 20:08 PM</string>
-    <string name="min_temp">Min: 12</string>
-    <string name="max_temp">Max: 26</string>
-    <string name="sunrise">Amanace</string>
-    <string name="sunrise_time">06:40 AM</string>
-    <string name="sunset">Atardece</string>
-    <string name="sunset_time">06:40 PM</string>
+    <string name="sunrise">Amanacer</string>
+    <string name="sunset">Atardecer</string>
     <string name="wind">Viento</string>
-    <string name="wind_seed">6 KM</string>
     <string name="created_by">Creada por</string>
     <string name="dev_name">JCP</string>
     <string name="pressure">Presión</string>
+    <string name="update">Actualizar</string>
     <string name="humidity">Humedad</string>
 </resources>

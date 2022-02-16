@@ -5,5 +5,8 @@ data class WeatherEntity(
     val main: Main,
     val sys: Sys,
     val id: Int,
-    val name: String
+    val name: String,
+    val wind: Wind,
+    val weather: List<Weather>,
+    val dt: Long
 )
