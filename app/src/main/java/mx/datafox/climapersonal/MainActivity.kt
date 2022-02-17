@@ -22,7 +22,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class MainActivity : AppCompatActivity() {
+
+    var location = ""
 
     private lateinit var binding: ModeloBinding
 
@@ -31,7 +34,12 @@ class MainActivity : AppCompatActivity() {
         binding = ModeloBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        aquireLocation()
         setupViewData()
+    }
+
+    private fun aquireLocation() {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
