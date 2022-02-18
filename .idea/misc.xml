@@ -5,6 +5,9 @@
       <map>
         <entry key="app/src/main/res/drawable/gradient_bg.xml" value="0.1415" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19555511474609377" />
+        <entry key="app/src/main/res/layout/alternate_layout.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/barriers_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/modelo.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/today_weather.xml" value="0.21398468017578123" />
         <entry key="app/src/main/res/menu/actions_menu.xml" value="0.2453125" />
