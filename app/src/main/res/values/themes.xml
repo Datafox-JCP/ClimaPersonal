@@ -14,6 +14,15 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.ClimaPersonal.Start" parent="Theme.SplashScreen">
+        <!-- Propiedades de SplashScreen color de fondo e imágen-->
+        <item name="windowSplashScreenBackground">@color/purple_500</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_background</item>
+
+        <!-- El tema definido se usará en el resto del app -->
+        <item name="postSplashScreenTheme">@style/Theme.ClimaPersonal</item>
+    </style>
+
     <style name="Theme.ClimaPersonal.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

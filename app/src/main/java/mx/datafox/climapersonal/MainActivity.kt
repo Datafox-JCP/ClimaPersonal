@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import coil.load
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     private var longitude = ""
 
     private lateinit var binding: ModeloBinding
-
     /**
      * Punto de entrada para el API Fused Location Provider.
      */
@@ -53,10 +53,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // SplashScreen API
+        installSplashScreen()
+
         binding = ModeloBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        if (!checkPermissions()) {
+            requestPermissions()
+        } else {
+            getLastLocation()
+        }
 
         setupViewData()
     }
@@ -64,7 +73,6 @@ class MainActivity : AppCompatActivity() {
     /**
      * Funciones de menú
      */
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.actions_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -87,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         if (checkForInternet(this)) {
             lifecycleScope.launch {
-                getLastLocation()
+                getLastLocation() // Se repite aquí para asegurar que habrá una ubicación.
                 formatResponse(getWeather())
             }
         } else {
@@ -175,7 +183,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Provee un forma sencilla de obtener la ubicación del dispositivo, muy adecuada para
-     * applicaciones que no requieren de una alta preción de la uniación y que no requieran
+     * applicaciones que no requieren de una alta preción de la ubicación y que no requieran
      * actualizaciones. Obtiene lo mejor y y más reciente ubicación disponible, que en algunos
      * casos puede llegar a ser nula, cuando la ubicación no este disponible.
      *
@@ -211,11 +219,67 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, arrayOf(ACCESS_COARSE_LOCATION),
             REQUEST_PERMISSIONS_REQUEST_CODE)
     }
+
+    private fun requestPermissions() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, ACCESS_COARSE_LOCATION)) {
+            // Proporciona una explicación adicional al usuario (rationale). Esto ocurre si el usuario
+            // niega el permiso previamente pero no marca la casilla "No volver a preguntar".
+            Log.i(TAG, "Muestra explicación rationale para proveer una contexto adicional de porque se requiere el permiso")
+            showSnackbar(R.string.permission_rationale, android.R.string.ok) {
+                // Solicitar permiso
+                startLocationPermissionRequest()
+            }
+
+        } else {
+            // Solicitar permiso. Es posible que esto pueda ser contestado de forma automática
+            // si la configuración del dispositivo define el permiso a un estado predefinido o
+            // si el usuario anteriormente activo "No presenter de nuevo".
+            Log.i(TAG, "Solicitando permiso")
+            startLocationPermissionRequest()
+        }
+    }
+
+    /**
+     * Callback recibido cuando se ha completado una solicitud de permiso.
+     */
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.i(TAG, "onRequestPermissionResult")
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            when {
+                // Si el flujo es interrumpido, la solicitud de permiso es cancelada y se
+                // reciben arrays vacios.
+                grantResults.isEmpty() -> Log.i(TAG, "La interacción del usuario fue cancelada.")
+
+                // Permiso otorgado.
+                (grantResults[0] == PackageManager.PERMISSION_GRANTED) -> getLastLocation()
+
+
+                else -> {
+                    showSnackbar(R.string.permission_denied_explanation, R.string.settings
+                    ) {
+                        // Construye el intent que muestra la ventana de configuración del app.
+                        val intent = Intent().apply {
+                            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            data = Uri.fromParts("package", APPLICATION_ID, null)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Muestra el [Snackbar].
      *
      * @param snackStrId El id del recurso para el el texto en el Snackbar.
-     * @param actionStrId El texto para el elemento de acciín.
+     * @param actionStrId El texto para el elemento de acción.
      * @param listener El listener asociado con la acción del Snackbar.
      */
     private fun showSnackbar(
