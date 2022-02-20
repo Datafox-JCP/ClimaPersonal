@@ -4,6 +4,7 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
@@ -64,10 +65,12 @@ class MainActivity : AppCompatActivity() {
         if (!checkPermissions()) {
             requestPermissions()
         } else {
-            getLastLocation()
+            // despues de que se obtine la location se ejecuta el setUpViewData con esa location
+            getLastLocation(){ location ->
+                setupViewData(location)
+            }
         }
 
-        setupViewData()
     }
 
     /**
@@ -91,11 +94,12 @@ class MainActivity : AppCompatActivity() {
      * Función para consultar y cargar datos de clima
      */
 
-    private fun setupViewData() {
+    private fun setupViewData(location: Location) {
 
         if (checkForInternet(this)) {
             lifecycleScope.launch {
-                getLastLocation() // Se repite aquí para asegurar que habrá una ubicación.
+                latitude = location.latitude.toString()
+                longitude = location.longitude.toString()
                 formatResponse(getWeather())
             }
         } else {
@@ -188,10 +192,13 @@ class MainActivity : AppCompatActivity() {
      * casos puede llegar a ser nula, cuando la ubicación no este disponible.
      *
      * Nota: Este método debe llamarse después que los permispos de ubicación fueron otorgados.
+     *
+     * @param onLocation es un callback que recibirá la location obtenída por
+     * fusedLocationClient.lastLocation
      */
 
     @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
+    private fun getLastLocation(onLocation: (location: Location) -> Unit) {
         fusedLocationClient.lastLocation
             .addOnCompleteListener { taskLocation ->
                 if (taskLocation.isSuccessful && taskLocation.result != null) {
@@ -201,6 +208,8 @@ class MainActivity : AppCompatActivity() {
                     latitude = location?.latitude.toString()
                     longitude = location?.longitude.toString()
                     Log.d(TAG, "GetLasLoc Lat: $latitude Long: $longitude")
+
+                    onLocation(taskLocation.result)
                 } else {
                     Log.w(TAG, "getLastLocation:exception", taskLocation.exception)
                     showSnackbar(R.string.no_location_detected)
@@ -256,7 +265,8 @@ class MainActivity : AppCompatActivity() {
                 grantResults.isEmpty() -> Log.i(TAG, "La interacción del usuario fue cancelada.")
 
                 // Permiso otorgado.
-                (grantResults[0] == PackageManager.PERMISSION_GRANTED) -> getLastLocation()
+                // Podemos pasar la referencia a una funcion si cumple con el mismo prototipo
+                (grantResults[0] == PackageManager.PERMISSION_GRANTED) -> getLastLocation(this::setupViewData)
 
 
                 else -> {
