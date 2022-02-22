@@ -65,12 +65,11 @@ class MainActivity : AppCompatActivity() {
         if (!checkPermissions()) {
             requestPermissions()
         } else {
-            // despues de que se obtine la location se ejecuta el setUpViewData con esa location
+            // despues de que se obtiene la location se ejecuta el setUpViewData con esa location
             getLastLocation(){ location ->
                 setupViewData(location)
             }
         }
-
     }
 
     /**
@@ -97,21 +96,22 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewData(location: Location) {
 
         if (checkForInternet(this)) {
+            // Se coloca en este punto para permitir su ejecución
+            showIndicator(true)
             lifecycleScope.launch {
                 latitude = location.latitude.toString()
                 longitude = location.longitude.toString()
                 formatResponse(getWeather())
             }
         } else {
-            showError("Sin acceso a Internet")
+            showError(getString(R.string.no_internet_access))
             binding.detailsContainer.isVisible = false
         }
     }
 
     private suspend fun getWeather(): WeatherEntity = withContext(Dispatchers.IO){
         Log.e(TAG, "CORR Lat: $latitude Long: $longitude")
-        showIndicator(true)
-
+        // showIndicator(true)
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -134,9 +134,17 @@ class MainActivity : AppCompatActivity() {
             val address = "$cityName, $country"
             val tempMin = "Mín: ${weatherEntity.main.temp_min.toInt()}º"
             val tempMax = "Max: ${weatherEntity.main.temp_max.toInt()}º"
-            val status = weatherEntity.weather[0].description.uppercase()
+            // Capitalizar la primera letra de la descripción
+            var status = ""
+            val weatherDescription = weatherEntity.weather[0].description
+            if (weatherDescription.isNotEmpty()) {
+                status = (weatherDescription[0].uppercaseChar() + weatherDescription.substring(1))
+            }
             val dt = weatherEntity.dt
-            val updatedAt = "Actualizado: ${SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(dt*1000))}"
+            val updatedAt =  getString(R.string.updatedAt) + SimpleDateFormat(
+                "hh:mm a",
+                Locale.ENGLISH
+            ).format(Date(dt * 1000))
             val sunrise = weatherEntity.sys.sunrise
             val sunriseFormat = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunrise*1000))
             val sunset = weatherEntity.sys.sunset
@@ -144,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             val wind = "${weatherEntity.wind.speed} km/h"
             val pressure = "${weatherEntity.main.pressure} mb"
             val humidity = "${weatherEntity.main.humidity}%"
-            val feelsLike = "Sensación: ${weatherEntity.main.feels_like.toInt()}º"
+            val feelsLike = getString(R.string.sensation) + weatherEntity.main.feels_like.toInt() + "º"
             val icon = weatherEntity.weather[0].icon
             val iconUrl = "https://openweathermap.org/img/w/$icon.png"
 
@@ -167,7 +175,7 @@ class MainActivity : AppCompatActivity() {
 
             showIndicator(false)
         } catch (exception: Exception) {
-            showError("Ha ocurrido un error con los datos")
+            showError(getString(R.string.error_ocurred))
             Log.e("Error format", "Ha ocurrido un error")
             showIndicator(false)
         }
@@ -191,9 +199,13 @@ class MainActivity : AppCompatActivity() {
      * actualizaciones. Obtiene lo mejor y y más reciente ubicación disponible, que en algunos
      * casos puede llegar a ser nula, cuando la ubicación no este disponible.
      *
+     * La herramienta Lint checa el código del proyecto por bugs y propone optimizaciones.
+     *
+     * SuppressLint indica que Lint debe ignorar las alertas pera el elemento anotado.
+     *
      * Nota: Este método debe llamarse después que los permispos de ubicación fueron otorgados.
      *
-     * @param onLocation es un callback que recibirá la location obtenída por
+     * @param onLocation es un callback que recibirá la location obtenida por
      * fusedLocationClient.lastLocation
      */
 

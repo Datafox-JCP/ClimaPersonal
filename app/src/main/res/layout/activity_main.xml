@@ -9,13 +9,16 @@
 
     <TextView
         android:id="@+id/adressTextView"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/andika_new_basic"
         android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,10 +26,10 @@
 
     <TextView
         android:id="@+id/dateTextView"
-        style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/andika_new_basic"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@+id/adressTextView"
         app:layout_constraintStart_toStartOf="@+id/adressTextView"
@@ -35,11 +38,13 @@
 
     <TextView
         android:id="@+id/statusTextView"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/andika_new_basic"
         android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"
@@ -47,10 +52,12 @@
 
     <TextView
         android:id="@+id/temperatureTextView"
-        style="@style/TextAppearance.MaterialComponents.Headline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/andika_new_basic"
         android:textColor="@android:color/white"
+        android:textSize="96sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/detailsContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.500"
@@ -61,12 +68,13 @@
 
     <TextView
         android:id="@+id/tempMinTextView"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/andika_new_basic"
         android:textColor="@android:color/white"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/temperatureTextView"
         tools:text="Min: 12º" />
@@ -113,18 +121,20 @@
                     android:layout_height="5dp" />
 
                 <TextView
-                    style="@style/TextAppearance.MaterialComponents.Caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/andika_new_basic"
                     android:text="@string/sunrise"
-                    android:textColor="#212121" />
+                    android:textColor="#212121"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/sunriseTextView"
-                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/andika_new_basic"
                     android:textColor="#212121"
+                    android:textSize="14sp"
                     tools:text="06:40 AM" />
             </LinearLayout>
 
@@ -153,11 +163,12 @@
                     android:layout_height="5dp" />
 
                 <TextView
-                    style="@style/TextAppearance.MaterialComponents.Caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/andika_new_basic"
                     android:text="@string/sunset"
-                    android:textColor="#212121" />
+                    android:textColor="#212121"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/sunsetTextView"
@@ -193,19 +204,21 @@
                     android:layout_height="5dp" />
 
                 <TextView
-                    style='@style/TextAppearance.MaterialComponents.Caption'
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/andika_new_basic"
                     android:text="@string/wind"
-                    android:textColor="#212121" />
+                    android:textColor="#212121"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/windTextView"
-                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/andika_new_basic"
                     android:textColor="#212121"
+                    android:textSize="14sp"
                     tools:text="1.5" />
             </LinearLayout>
         </LinearLayout>
@@ -242,18 +255,17 @@
                     android:layout_height="5dp" />
 
                 <TextView
-                    style='style="@style/TextAppearance.MaterialComponents.Caption'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pressure"
-                    android:textColor="#1A237E" />
+                    android:textColor="#212121" />
 
                 <TextView
                     android:id="@+id/pressureTextView"
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#263238"
+                    android:textColor="#212121"
                     tools:text="1023" />
             </LinearLayout>
 
@@ -287,14 +299,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/humidity"
-                    android:textColor="#1A237E" />
+                    android:textColor="#212121" />
 
                 <TextView
                     android:id="@+id/humidityTextView"
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#263238"
+                    android:textColor="#212121"
                     tools:text="100" />
             </LinearLayout>
 
@@ -328,7 +340,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/created_by"
-                    android:textColor="#1A237E" />
+                    android:textColor="#212121" />
 
                 <TextView
                     android:id="@+id/developerTextView"
@@ -336,19 +348,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dev_name"
-                    android:textColor="#263238" />
+                    android:textColor="#212121" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/tempMaxTextView"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/andika_new_basic"
         android:textColor="@android:color/white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/temperatureTextView"
         tools:text="Max: 26º" />
@@ -372,8 +385,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:fontFamily="@font/andika_new_basic"
         android:textColor="@android:color/white"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tempMinTextView"
         tools:text="Sensación: 22º" />

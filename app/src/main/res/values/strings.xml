@@ -20,4 +20,10 @@
         El permiso de ubicación es indispensable para usar el app.
     </string>
     <string name="settings">Ajustes</string>
+    <string name="no_internet_access">Sin acceso a Internet</string>
+    <string name="updated">\"Actualizado: "</string>
+    <string name="sensation">\"Sensación: "</string>
+    <string name="error_ocurred">Ha ocurrido un error con los datos</string>
+    <string name="updatedAt">\"Actualizado: \"</string>
+    <string name="hello">HOLA</string>
 </resources>
