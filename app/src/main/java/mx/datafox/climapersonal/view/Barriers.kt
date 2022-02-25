@@ -1,4 +1,4 @@
-package mx.datafox.climapersonal
+package mx.datafox.climapersonal.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

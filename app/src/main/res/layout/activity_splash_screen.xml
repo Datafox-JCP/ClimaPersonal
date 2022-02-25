@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:background="@drawable/gradient_bg"
-    tools:context=".SplashScreenActivity">
+    tools:context=".view.SplashScreenActivity">
 
     <ImageView
         android:id="@+id/logoImageView"
@@ -16,7 +16,7 @@
         android:layout_height="150dp"
         android:contentDescription="@string/logo"
         android:padding="4dp"
-        app:srcCompat="@drawable/logo"
+        app:srcCompat="@drawable/sunset"
         tools:ignore="ImageContrastCheck" />
 
     <TextView

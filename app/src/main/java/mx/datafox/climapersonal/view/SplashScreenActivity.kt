@@ -1,4 +1,4 @@
-package mx.datafox.climapersonal
+package mx.datafox.climapersonal.view
 
 import android.content.Intent
 import android.os.Build
@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import mx.datafox.climapersonal.R
 import mx.datafox.climapersonal.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -34,7 +35,9 @@ class SplashScreenActivity : AppCompatActivity() {
             )
         }
 
-        val splashAnimation = AnimationUtils.loadAnimation(this@SplashScreenActivity, R.anim.splash_anim)
+        val splashAnimation = AnimationUtils.loadAnimation(this@SplashScreenActivity,
+            R.anim.splash_anim
+        )
         splashScreenBinding.appTextView.animation = splashAnimation
 
         splashAnimation.setAnimationListener(object : Animation.AnimationListener {

@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClimaPersonal" >
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ClimaPersonal.Start">
             <intent-filter>

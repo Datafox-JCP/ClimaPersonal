@@ -1,4 +1,4 @@
-package mx.datafox.climapersonal
+package mx.datafox.climapersonal.view
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.annotation.SuppressLint
@@ -22,12 +22,14 @@ import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mx.datafox.climapersonal.BuildConfig.APPLICATION_ID
+import mx.datafox.climapersonal.R
 import mx.datafox.climapersonal.databinding.ModeloBinding
 import mx.datafox.climapersonal.network.WeatherEntity
 import mx.datafox.climapersonal.network.WeatherService
@@ -83,7 +85,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_actualizar -> {
-                Toast.makeText(this, "Menú seleccionado", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "Menú seleccionado", Toast.LENGTH_SHORT).show()
+                showCreateUserDialog("27")
             }
         }
         return super.onOptionsItemSelected(item)
@@ -182,6 +185,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Función para generar un cuadro de diálogo
+     */
+    private fun showCreateUserDialog(temperature: String) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("La temperatura actual es: \"$temperature\".")
+            .setMessage("¿Quieres cambiar de ubicación?")
+            .setPositiveButton("Nueva ubicación") { _, _ ->
+                onConfirmLocationChange()
+            }
+            .setNegativeButton("Cancelar") { _, _ ->
+                showSnackbar(R.string.canceled_action)
+            }
+            .show()
+    }
+
+    private fun onConfirmLocationChange() {
+        /* perform more business logic */
+    }
+
+    /**
      * Complementarios para errores y visibilidad de las views
      */
 
@@ -211,6 +234,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun getLastLocation(onLocation: (location: Location) -> Unit) {
+        Log.d(TAG, "Aquí estoy: $latitude Long: $longitude")
         fusedLocationClient.lastLocation
             .addOnCompleteListener { taskLocation ->
                 if (taskLocation.isSuccessful && taskLocation.result != null) {
@@ -282,7 +306,8 @@ class MainActivity : AppCompatActivity() {
 
 
                 else -> {
-                    showSnackbar(R.string.permission_denied_explanation, R.string.settings
+                    showSnackbar(
+                        R.string.permission_denied_explanation, R.string.settings
                     ) {
                         // Construye el intent que muestra la ventana de configuración del app.
                         val intent = Intent().apply {

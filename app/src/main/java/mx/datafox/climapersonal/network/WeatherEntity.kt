@@ -1,5 +1,10 @@
 package mx.datafox.climapersonal.network
 
+import mx.datafox.climapersonal.model.Main
+import mx.datafox.climapersonal.model.Sys
+import mx.datafox.climapersonal.model.Weather
+import mx.datafox.climapersonal.model.Wind
+
 data class WeatherEntity(
     val base: String,
     val main: Main,

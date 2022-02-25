@@ -1,4 +1,4 @@
-package mx.datafox.climapersonal.network
+package mx.datafox.climapersonal.model
 
 data class Sys(
     val country: String,

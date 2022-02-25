@@ -26,4 +26,5 @@
     <string name="error_ocurred">Ha ocurrido un error con los datos</string>
     <string name="updatedAt">\"Actualizado: \"</string>
     <string name="hello">HOLA</string>
+    <string name="canceled_action">Acción cancelada</string>
 </resources>
