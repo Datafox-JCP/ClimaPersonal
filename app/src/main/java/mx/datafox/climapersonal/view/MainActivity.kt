@@ -131,32 +131,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun formatResponse(weatherEntity: WeatherEntity){
         try {
-            val temp = "${weatherEntity.main.temp.toInt()}º"
-            val cityName = weatherEntity.name
-            val country = weatherEntity.sys.country
+            val temp = "${weatherEntity.current.temp.toInt()}º"
+            val cityName = ""//weatherEntity.name
+            val country = "" //weatherEntity.sys.country
             val address = "$cityName, $country"
-            val tempMin = "Mín: ${weatherEntity.main.temp_min.toInt()}º"
-            val tempMax = "Max: ${weatherEntity.main.temp_max.toInt()}º"
+            val tempMin = "" //"Mín: ${weatherEntity.main.temp_min.toInt()}º"
+            val tempMax = "" //""Max: ${weatherEntity.main.temp_max.toInt()}º"
             // Capitalizar la primera letra de la descripción
             var status = ""
-            val weatherDescription = weatherEntity.weather[0].description
+            val weatherDescription = weatherEntity.current.weather[0].description
             if (weatherDescription.isNotEmpty()) {
                 status = (weatherDescription[0].uppercaseChar() + weatherDescription.substring(1))
             }
-            val dt = weatherEntity.dt
+            val dt = weatherEntity.current.dt
             val updatedAt =  getString(R.string.updatedAt) + SimpleDateFormat(
                 "hh:mm a",
                 Locale.ENGLISH
             ).format(Date(dt * 1000))
-            val sunrise = weatherEntity.sys.sunrise
+            val sunrise = weatherEntity.current.sunrise
             val sunriseFormat = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunrise*1000))
-            val sunset = weatherEntity.sys.sunset
+            val sunset = weatherEntity.current.sunset
             val sunsetFormat = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunset*1000))
-            val wind = "${weatherEntity.wind.speed} km/h"
-            val pressure = "${weatherEntity.main.pressure} mb"
-            val humidity = "${weatherEntity.main.humidity}%"
-            val feelsLike = getString(R.string.sensation) + weatherEntity.main.feels_like.toInt() + "º"
-            val icon = weatherEntity.weather[0].icon
+            val wind = "${weatherEntity.current.wind_speed} km/h"
+            val pressure = "${weatherEntity.current.pressure} mb"
+            val humidity = "${weatherEntity.current.humidity}%"
+            val feelsLike = getString(R.string.sensation) + weatherEntity.current.feels_like.toInt() + "º"
+            val icon = weatherEntity.current.weather[0].icon
             val iconUrl = "https://openweathermap.org/img/w/$icon.png"
 
             binding.apply {
