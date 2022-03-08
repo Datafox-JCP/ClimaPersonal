@@ -13,9 +13,11 @@
         <entry key="app/src/main/res/layout/alternate_layout.xml" value="0.165" />
         <entry key="app/src/main/res/layout/barriers_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/modelo.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/settings_activity.xml" value="0.2317948717948718" />
         <entry key="app/src/main/res/layout/today_weather.xml" value="0.21398468017578123" />
         <entry key="app/src/main/res/menu/actions_menu.xml" value="0.2453125" />
-        <entry key="app/src/main/res/menu/menu_main.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.1" />
+        <entry key="app/src/main/res/xml/root_preferences.xml" value="0.26556396484375" />
       </map>
     </option>
   </component>

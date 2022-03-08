@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Personal Weather</string>
+    <string name="main_retrofit_in_progress">Consultando…</string>
+    <string name="sunrise">Amanacer</string>
+    <string name="sunset">Atardecer</string>
+    <string name="wind">Atardecer</string>
+    <string name="created_by">Creada por</string>
+    <string name="dev_name">JCP</string>
+    <string name="pressure">Presión</string>
+    <string name="update">Actualizar</string>
+    <string name="humidity">Humedad</string>
+    <string name="logo">Personal Weather</string>
+    <string name="permission_denied_explanation">"El permiso fue negado, pero es indispensable para usar el app.     "</string>
+    <string name="no_location_detected">" No se puede acceder a la ubicación. Asegurate que el servicio de ubicación está activado en tu dispositivo   "</string>
+    <string name="permission_rationale">" El permiso de ubicación es indispensable para usar el app.     "</string>
+    <string name="settings">Ajustes</string>
+    <string name="no_internet_access">Sin acceso a Internet</string>
+    <string name="updated">"Actualizado: "</string>
+    <string name="sensation">"Sensación: "</string>
+    <string name="error_ocurred">Ha ocurrido un error con los datos</string>
+    <string name="updatedAt">Actualizado:</string>
+    <string name="hello">HOLA</string>
+    <string name="canceled_action">Acción cancelada</string>
+    <string name="title_activity_settings">Configuración</string>
+    <string name="settings_title">Configuración</string>
+    <string name="measure_metric">Unidad de temperatura</string>
+</resources>

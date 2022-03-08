@@ -19,6 +19,7 @@ import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import coil.load
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -48,6 +49,9 @@ class MainActivity : AppCompatActivity() {
     private var latitude = ""
     private var longitude = ""
 
+    private var units = false
+    private var language = false
+
     private lateinit var binding: ModeloBinding
     /**
      * Punto de entrada para el API Fused Location Provider.
@@ -72,6 +76,10 @@ class MainActivity : AppCompatActivity() {
                 setupViewData(location)
             }
         }
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        units = sharedPreferences.getBoolean("units", false)
+        language = sharedPreferences.getBoolean("language", false)
     }
 
     /**
@@ -87,6 +95,10 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_actualizar -> {
                 // Toast.makeText(this, "Menú seleccionado", Toast.LENGTH_SHORT).show()
                 showCreateUserDialog("27")
+            }
+            R.id.preferenciasMenu -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -114,6 +126,15 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun getWeather(): WeatherEntity = withContext(Dispatchers.IO){
         Log.e(TAG, "CORR Lat: $latitude Long: $longitude")
+        var unit = "metric"
+        var languageCode = "es"
+
+        if (units) {
+            unit = "imperial"
+        }
+        if (language) {
+            languageCode = "en"
+        }
         // showIndicator(true)
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/")
@@ -122,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         val service: WeatherService = retrofit.create(WeatherService::class.java)
 
-        service.getWeatherById(latitude, longitude, "metric", "sp", "30ba6cd1ad33ea67e2dfd78a8d28ae62")
+        service.getWeatherById(latitude, longitude, unit, languageCode, "30ba6cd1ad33ea67e2dfd78a8d28ae62")
     }
 
     /**
@@ -130,8 +151,14 @@ class MainActivity : AppCompatActivity() {
      */
 
     private fun formatResponse(weatherEntity: WeatherEntity){
+        var unitSymbol = "ºC"
+
+        if (units) {
+            unitSymbol = "ºF"
+        }
+
         try {
-            val temp = "${weatherEntity.current.temp.toInt()}º"
+            val temp = "${weatherEntity.current.temp.toInt()}$unitSymbol"
             val cityName = ""//weatherEntity.name
             val country = "" //weatherEntity.sys.country
             val address = "$cityName, $country"
@@ -155,7 +182,7 @@ class MainActivity : AppCompatActivity() {
             val wind = "${weatherEntity.current.wind_speed} km/h"
             val pressure = "${weatherEntity.current.pressure} mb"
             val humidity = "${weatherEntity.current.humidity}%"
-            val feelsLike = getString(R.string.sensation) + weatherEntity.current.feels_like.toInt() + "º"
+            val feelsLike = getString(R.string.sensation) + weatherEntity.current.feels_like.toInt() + unitSymbol
             val icon = weatherEntity.current.weather[0].icon
             val iconUrl = "https://openweathermap.org/img/w/$icon.png"
 
